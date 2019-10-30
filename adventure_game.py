@@ -1,8 +1,7 @@
 # Adventure Game
-# Creators: Elizabeth Fuller,
+# Creators: Elizabeth Fuller, Olivia Lee
 # Date Started: 10/30/19
 
-# My email is leeo@hartwick.edu
 import random
 
 
@@ -16,6 +15,12 @@ def chance_roll():
     # either dice roll, or random int for chance of trap, monster, or free path. change if statements if values change
     chance = random.randint(1, 10) # what range do we want to use? if dice 2-12? if not is 1-10 fine?
     return chance
+
+
+def welcome():
+    print("""Welcome to out Adventure Game! You will be given a series of choices which 
+    will ultimatly all contribute to your fate. To begin, Please enter your name: """)
+    name = input()
 
 
 def swamp_path():
