@@ -36,13 +36,13 @@ def swamp_path():
 
     if swamp_choice1 == "1":
         # higher monster chance
-        print("You took the path on the right.\nYou carefully watch your step as to not get tangled in the undergrowth.")
+        print("\nYou took the path on the right.\nYou carefully watch your step as to not get tangled in the undergrowth.")
         # determine if monster appears, trap activates, or if player misses any impeding obstacles
         spawn_right1 = chance_roll()
         print(spawn_right1) # statement to check random int
         if spawn_right1 <= 3:
             # free
-            print("no monsters or traps")
+            print()
             print("""The undergrowth almost trips you up and you find a rare flower. 
 Nothing else of note happens as you travel down the path. 
 Eventually you come across a clearing.""")
@@ -50,8 +50,11 @@ Eventually you come across a clearing.""")
             # trap
             print("Trap activates")
         else:
-            # monster
-            print("Monster appears")
+            # monster, add monster(list)
+            print("While you were walking you hear the bushes rustle. Out jumps a {forest_monster}!")
+            print("What do you do?\nFight [1]\nFlee for you life [2]\nPanic [3]")
+            swamp_fight1 = input("> ")
+            swamp_fight1 = swamp_fight1.strip()
 
     elif swamp_choice1 == "2":
         # higher trap chance
@@ -76,7 +79,10 @@ You could have taken either and still gotten here!""")
     elif swamp_choice2 == "2":
         print("Left")
     else:
-        print("Other action")
+        print("""You decide that instead of taking either path to walk around the clearing.
+As you are walking you find a hidden path. This one looks well made, and is brightly lit.
+You decide to take this path over the other two.
+""")
 
 
 
