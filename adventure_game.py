@@ -3,7 +3,9 @@
 # Date Started: 10/30/19
 
 import random
-
+forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
+swamp_monsters = ["slime", "kappa", "monster", "monster", "monster"]
+collected_items = []
 
 def die_roll():
     # roll one 20 sided die, for boss fights
@@ -15,6 +17,45 @@ def chance_roll():
     # either dice roll, or random int for chance of trap, monster, or free path. change if statements if values change
     chance = random.randint(1, 10) # what range do we want to use? if dice 2-12? if not is 1-10 fine?
     return chance
+
+
+def monster_select(list):
+    # to select monster for regular fights. will have to send wanted list. forest, swamp, or mansion
+    monster_number = random.randint(0, 4)
+    x = 0
+    while x < monster_number:
+        x = x + 1
+        for monster in list:
+            creature = monster
+    win = monster_fight(creature)
+    return win
+
+
+def monster_fight(creature):
+    print(f"A {creature} appears!")
+    print("What do you do:\nFight [1]\nFlee [2]\nPanic [3]")
+    choice = input("> ")
+    choice = choice.strip()
+    win = 0
+    if choice == '1':
+        print("choose fight")
+        win = 1
+    elif choice == '2':
+        print("choose flee")
+
+    elif choice == '3':
+        print('choose panic')
+
+    else:
+        print(f"You decide to try and reason with the {creature}.")
+        reason_chance = random.randint(0,1)
+        if reason_chance == 0:
+            print(f"You successfully reasoned with the {creature}.")
+
+            win = 1
+        else:
+            print("")
+    return win
 
 
 def welcome():
@@ -51,10 +92,14 @@ Eventually you come across a clearing.""")
             print("Trap activates")
         else:
             # monster, add monster(list)
-            print("While you were walking you hear the bushes rustle. Out jumps a {forest_monster}!")
-            print("What do you do?\nFight [1]\nFlee for you life [2]\nPanic [3]")
-            swamp_fight1 = input("> ")
-            swamp_fight1 = swamp_fight1.strip()
+            print("While you were walking you hear the bushes rustle.")
+            win = monster_select(forest_monsters)
+            if win == 1:
+                print("walk to clearing")
+            else:
+                print("Failed. end game")
+
+
 
     elif swamp_choice1 == "2":
         # higher trap chance
