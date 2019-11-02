@@ -5,11 +5,19 @@
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "monster", "monster", "monster"]
+mansion_monsters = []
 collected_items = []
 
-def die_roll():
+
+def die_roll_boss():
     # roll one 20 sided die, for boss fights
     die = random.randint(1, 20)
+    return die
+
+
+def die_roll_fight():
+    # 6 sided die for player to roll during fights
+    die = random.randint(1, 6)
     return die
 
 
@@ -27,25 +35,24 @@ def monster_select(list):
         x = x + 1
         for monster in list:
             creature = monster
-    win = monster_fight(creature)
+    win = monster_encounter(creature)
     return win
 
 
-def monster_fight(creature):
+def monster_encounter(creature):
     print(f"A {creature} appears!")
     print("What do you do:\nFight [1]\nFlee [2]\nPanic [3]")
     choice = input("> ")
     choice = choice.strip()
-    win = 0
     if choice == '1':
-        print("choose fight")
-        win = 1
+        win = monster_fight(creature)
+
     elif choice == '2':
         print("choose flee")
 
     elif choice == '3':
         print('choose panic')
-
+        win = 0
     else:
         print(f"You decide to try and reason with the {creature}.")
         reason_chance = random.randint(0,1)
@@ -54,8 +61,69 @@ def monster_fight(creature):
 
             win = 1
         else:
-            print("")
+            print("failed to reason")
+            win = 0
     return win
+
+
+def monster_fight(creature):
+    monster_health = 150
+    health = 100
+    roll1 = die_roll_fight()
+    print(f"You choose to stand your ground and fight.")
+    print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
+    while monster_health != 0 or health != 0:
+
+        print(f"\nYour move:\nYou roll the dice""")
+        input(">")
+        print(roll1)
+        if roll1 <= 3:
+            damage = round(roll1 / 2 * 10)
+            print(f"You did {damage} damage to the {creature}.")
+            monster_health = monster_health - damage
+        elif roll1 <= 5:
+            damage = round((roll1 / 2 + roll1) * 10)
+            print(f"You did {damage} damage to the {creature}.")
+            monster_health = monster_health - damage
+        else:
+            damage = roll1 * 10 + 10
+            print(f"You did {damage} damage to the {creature}.")
+            monster_health = monster_health - damage
+
+        print(f"\nPlayer health: {health}\n{creature.title()} health: {monster_health}")
+        if monster_health == 0:
+            print(f"You win!\nYou beat the {creature}! ")
+
+            return 1
+        print(f"{creature.title()}'s turn")
+        attack1 = chance_roll()
+        dodge = die_roll_fight()
+        input("You roll for a chance to dodge\n>")
+        print(dodge)
+        if dodge <= 3:
+            print("dodges")
+        elif attack1 == 1:
+            health = health - 10
+            print("attack of 10")
+        elif attack1 <= 3:
+            print("attack of 20")
+            health = health - 20
+        elif attack1 <= 6:
+            print("attack of 30")
+            health = health - 30
+        elif attack1 <= 9:
+            print("attack of 40")
+            health = health - 40
+        else:
+            print("attack of 50")
+            health = health - 50
+        print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
+        if health == 0:
+            print("You lose")
+            return 0
+
+
+
 
 
 def welcome():
@@ -95,9 +163,10 @@ Eventually you come across a clearing.""")
             print("While you were walking you hear the bushes rustle.")
             win = monster_select(forest_monsters)
             if win == 1:
-                print("walk to clearing")
+                print("W")
             else:
-                print("Failed. end game")
+                print("L")
+
 
 
 
