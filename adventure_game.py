@@ -220,6 +220,8 @@ Eventually you come across a clearing.""")
             print("As you were preoccupied by a particularly tricky bit of folliage...")
             print("You get caught by a trap!")
             success = traps(forest_traps)
+            if success == 0:
+                print("end game")
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
@@ -248,6 +250,8 @@ Eventually you come across a clearing.""")
             # if win continue down path if loss end game
             print("Trap activates")
             success = traps(forest_traps)
+            if success == 0:
+                print("end game")
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
@@ -284,6 +288,8 @@ You could have taken either and still gotten here!""")
             # if win continue down path if loss end game
             print("Trap activates")
             success = traps(forest_traps)
+            if success == 0:
+                print("end game")
         else:
             # monster, add monster(list)
             print("what happens before monster.")
@@ -307,6 +313,8 @@ Eventually you come across a clearing.""")
             # trap
             print("Trap activates")
             success = traps(forest_traps)
+            if success == 0:
+                print("end game")
         else:
             # monster, add monster(list)
             print("monster indicator noises")
