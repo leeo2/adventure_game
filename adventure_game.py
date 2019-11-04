@@ -7,7 +7,7 @@ forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 
 swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
 mansion_monsters = ["ghost"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
-collected_items = []
+
 
 
 def die_roll_boss():
@@ -339,7 +339,7 @@ You decide to take this path over the other two.
     print("There is one strip of land, one path back the way you came.")
     print("You start carefully start making your way down the path.")
     print("Suddenly a bright light appears in your way."
-          "The light fades to reveal...")
+          "\nThe light fades to reveal...")
 
 def end():
     print("The game is now over")
