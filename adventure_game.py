@@ -4,11 +4,16 @@
 
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
-swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
+swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "monster"]
 mansion_monsters = ["ghost"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 
-
+# monster win :
+# 2 pt - fight
+#  1pt - flee + reason
+#  traps success
+# 2 - wit
+# 1 - strength
 
 def die_roll_boss():
     # roll one 20 sided die, for boss fights
@@ -51,6 +56,7 @@ def monster_encounter(creature):
         win = monster_fight(creature)
     # player choose flee
     elif choice == '2':
+# 50\50 1pt success, 0 pt + lose fail
         print("choose flee")
     # player picked panic automatic loss
     elif choice == '3':
@@ -76,7 +82,7 @@ def monster_fight(creature):
     player 'rolls' to determine damage dealt.
     monster attacks, player rolls to dodge. monster attack strength by random int
     loops till player or monster is dead"""
-    monster_health = 150
+    monster_health = 125
     health = 100
     roll1 = die_roll_fight()
     print(f"You choose to stand your ground and fight.")
@@ -99,10 +105,11 @@ def monster_fight(creature):
             damage = roll1 * 10 + 10
             print(f"You did {damage} damage to the {creature}.")
             monster_health = monster_health - damage
-
+        if monster_health < 0:
+            monster_health = 0
         print(f"\nPlayer health: {health}\n{creature.title()} health: {monster_health}")
         # print health statuses. check to see if monster is dead. if yes stop loop
-        if monster_health == 0:
+        if monster_health <= 0:
             print(f"You win!\nYou beat the {creature}! ")
 
             return 1
@@ -129,9 +136,11 @@ def monster_fight(creature):
         else:
             print("attack of 50")
             health = health - 50
+        if health < 0:
+            health = 0
         # print health update. check to see if player is alive, no? - stop loop
         print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
-        if health == 0:
+        if health < 0:
             print("You lose")
             return 0
     # loop till one is dead
@@ -196,7 +205,7 @@ def welcome():
 
 
 
-def swamp_path():
+def swamp_path(score, name):
     # Path to go to the swamp. walking down chosen path, first swamp path fork dialog
     print("You walk down the path taking in the scenery.\nYou come across another fork in the road.")
     print("The path splits left and right.\nThe right path is overgrown and looks very untrodden.")
@@ -340,10 +349,123 @@ You decide to take this path over the other two.
     print("You start carefully start making your way down the path.")
     print("Suddenly a bright light appears in your way."
           "\nThe light fades to reveal...")
+    swamp_boss(score, name)
+
+
+def swamp_boss(score, name):
+    boss_health = 175
+    health = 100
+    print("A lamia blocking your only escape."
+          "\nShe beckons you closer..."
+          "\nWhat do you do?"
+          "\nCharge in for the attack [1]"
+          "\nBecome seduced by the lamia [2]"
+          "\nTry to talk to her [3]")
+    choice = input("> ")
+    if choice == '1':
+        print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+        while boss_health != 0 or health != 0:
+            roll1 = die_roll_fight()
+            print(f"\nYour move:\nYou roll the dice""")
+            input(">")
+            print(roll1)
+            if roll1 <= 3:
+                damage = round(roll1 / 2 * 10)
+                crit = random.randint(0, 3)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            elif roll1 <= 5:
+                damage = round((roll1 / 2 + roll1) * 10)
+                crit = random.randint(0, 2)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            else:
+                damage = roll1 * 10 + 10
+                crit = random.randint(0, 1)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            if boss_health < 0:
+                boss_health = 0
+            print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+            if boss_health <= 0:
+                print(f"You win!\nYou beat the lamia! ")
+                score = score + 3
+                print(" + 3")
+                return
+            print(f"Lamia's turn")
+            attack1 = chance_roll()
+            dodge = die_roll_fight()
+            input("You roll for a chance to dodge\n>")
+            print(dodge)
+            if dodge <= 3:
+                print("dodges")
+            elif attack1 == 1:
+                health = health - 10
+                print("attack of 10")
+            elif attack1 <= 3:
+                print("attack of 20")
+                health = health - 20
+            elif attack1 <= 6:
+                print("attack of 30")
+                health = health - 30
+            elif attack1 <= 9:
+                print("attack of 40")
+                health = health - 40
+            else:
+                print("attack of 50")
+                health = health - 50
+            if health < 0:
+                health = 0
+            print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+            if health <= 0:
+                print("You lose")
+                return
+    elif choice == '2':
+        print("She succeed in seducing you."
+              "\nShe wrapped you up in her tail and carried you to her lair."
+              "\nIt is a nice looking lair for a snake woman."
+              "\nIt may be a cave, but it's decorated nicely with the bones of her past prey.")
+        print("You became dinner"
+              "\n\nYou lose!")
+        end()
+    else:
+        # become friends
+        print(f'''You decide to try talking to the lamia.
+She seems startled by this, confusion settles over her face.
+“You are talking to me? No one talks to me!”
+She then explains that everyone that she came across tried to kill her
+So as a defensive action she decided to hypnotize them and toss them into the snake pit.
+“Oh my! I haven\'t even introduced myself. I am Vasugi.”
+\nYou introduce yourself
+“I am {name}, nice to meet you Vasugi.” 
+
+Vasugi offers to take you back to her den for the night.
+As it was getting quite late you took her up on the offer.
+
+Vasugi's den was very cozy and looked well maintained.
+You spend the night in a soft pile of furs.
+
+After a small breakfast and chat with Vasugi, she escorts you back to civilization. 
+As you part ways you promise to come visit sometimes.
+''')
+        print("You be came friends with Vasugi the Lamia!")
+        score = score + 4
+        print(" + 4")
+        end()
+
 
 def end():
     print("The game is now over")
     print(f"Your score is {score}")
 
 
-run = swamp_path() # function caller to test swamp path
+# these are for my use of testing my path function
+score = 0
+name = "name"
+run = swamp_path(score, name) # function caller to test swamp path
