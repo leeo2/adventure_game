@@ -4,8 +4,9 @@
 
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
-swamp_monsters = ["slime", "kappa", "monster", "monster", "monster"]
+swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
 mansion_monsters = []
+forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 collected_items = []
 
 
@@ -216,7 +217,9 @@ Nothing else of note happens as you travel down the path.
 Eventually you come across a clearing.""")
         elif spawn_right1 <= 6:
             # trap
-            print("Trap activates")
+            print("As you were preoccupied by a particularly tricky bit of folliage...")
+            print("You get caught by a trap!")
+            success = traps(forest_traps)
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
@@ -244,6 +247,7 @@ Eventually you come across a clearing.""")
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
             print("Trap activates")
+            success = traps(forest_traps)
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
@@ -279,6 +283,7 @@ You could have taken either and still gotten here!""")
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
             print("Trap activates")
+            success = traps(forest_traps)
         else:
             # monster, add monster(list)
             print("what happens before monster.")
@@ -301,6 +306,7 @@ Eventually you come across a clearing.""")
         elif spawn_left1 <= 7:
             # trap
             print("Trap activates")
+            success = traps(forest_traps)
         else:
             # monster, add monster(list)
             print("monster indicator noises")
@@ -314,6 +320,15 @@ Eventually you come across a clearing.""")
 As you are walking you find a hidden path. This one looks well made, and is brightly lit.
 You decide to take this path over the other two.
 """)
+    print("At the end of the path you come across a veil of vines, pushing it a side reveals a stone structure.")
+    print("It seems to be some kind of altar. Perhaps it was made so people could give offerings to some god.")
+    print("You walk over to the altar and hear a rumbling noise.")
+    print("The ground starts falling away to reveal a huge snake pit.")
+    print("There is one strip of land, one path back the way you came.")
+    print("You start carefully start making your way down the path.")
+    print("Suddenly a bright light appears in your way."
+          "The light fades to reveal...")
+
 
 
 
