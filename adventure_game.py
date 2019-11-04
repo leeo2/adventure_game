@@ -5,7 +5,7 @@
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
-mansion_monsters = []
+mansion_monsters = ["ghost"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 collected_items = []
 
@@ -188,8 +188,12 @@ def trap_escape(sprung_trap):
 
 def welcome():
     print("""Welcome to out Adventure Game! You will be given a series of choices which 
-    will ultimatly all contribute to your fate. To begin, Please enter your name: """)
+    will ultimately all contribute to your fate. To begin, please enter your name: """)
     name = input()
+    print(f"Welcome {name}!")
+
+    print("The game will now begin.")
+
 
 
 def swamp_path():
@@ -337,7 +341,9 @@ You decide to take this path over the other two.
     print("Suddenly a bright light appears in your way."
           "The light fades to reveal...")
 
-
+def end():
+    print("The game is now over")
+    print(f"Your score is {score}")
 
 
 run = swamp_path() # function caller to test swamp path
