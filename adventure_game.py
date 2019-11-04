@@ -22,8 +22,8 @@ def die_roll_fight():
 
 
 def chance_roll():
-    # either dice roll, or random int for chance of trap, monster, or free path. change if statements if values change
-    chance = random.randint(1, 10) # what range do we want to use? if dice 2-12? if not is 1-10 fine?
+    # either dice roll, or random int for chance of trap, monster, or free path.
+    chance = random.randint(1, 10)
     return chance
 
 
@@ -35,24 +35,27 @@ def monster_select(list):
         x = x + 1
         for monster in list:
             creature = monster
-    win = monster_encounter(creature)
+    win = monster_encounter(creature) # win goes back to the path so it can continue or end the game
     return win
 
 
 def monster_encounter(creature):
+    # monster is picked. options for player
     print(f"A {creature} appears!")
     print("What do you do:\nFight [1]\nFlee [2]\nPanic [3]")
     choice = input("> ")
     choice = choice.strip()
+    # player picked fight. go to fight function
     if choice == '1':
         win = monster_fight(creature)
-
+    # player choose flee
     elif choice == '2':
         print("choose flee")
-
+    # player picked panic automatic loss
     elif choice == '3':
         print('choose panic')
         win = 0
+    # secret reason with option. 50\50 chance
     else:
         print(f"You decide to try and reason with the {creature}.")
         reason_chance = random.randint(0,1)
@@ -63,10 +66,15 @@ def monster_encounter(creature):
         else:
             print("failed to reason")
             win = 0
+    # win goes back to previous function, see comment on monster_select to follow path of win
     return win
 
 
 def monster_fight(creature):
+    """ monster health, player health resets every fight
+    player 'rolls' to determine damage dealt.
+    monster attacks, player rolls to dodge. monster attack strength by random int
+    loops till player or monster is dead"""
     monster_health = 150
     health = 100
     roll1 = die_roll_fight()
@@ -77,6 +85,7 @@ def monster_fight(creature):
         print(f"\nYour move:\nYou roll the dice""")
         input(">")
         print(roll1)
+        # damage calculations and inform player of what the damage is
         if roll1 <= 3:
             damage = round(roll1 / 2 * 10)
             print(f"You did {damage} damage to the {creature}.")
@@ -91,10 +100,12 @@ def monster_fight(creature):
             monster_health = monster_health - damage
 
         print(f"\nPlayer health: {health}\n{creature.title()} health: {monster_health}")
+        # print health statuses. check to see if monster is dead. if yes stop loop
         if monster_health == 0:
             print(f"You win!\nYou beat the {creature}! ")
 
             return 1
+        # monster attack. player rolls to dodge. attack picked by random int
         print(f"{creature.title()}'s turn")
         attack1 = chance_roll()
         dodge = die_roll_fight()
@@ -117,13 +128,61 @@ def monster_fight(creature):
         else:
             print("attack of 50")
             health = health - 50
+        # print health update. check to see if player is alive, no? - stop loop
         print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
         if health == 0:
             print("You lose")
             return 0
+    # loop till one is dead
 
 
+def traps(traps):
+    # to choose which trap from trap lists
+    trap_number = random.randint(0, 4)
+    x = 0
+    while x < trap_number:
+        x = x + 1
+        for trap in traps:
+            sprung_trap = trap
+    escape = trap_escape(sprung_trap)
+    return escape
 
+
+def trap_escape(sprung_trap):
+    # trap has been picked. how does play deal with it
+    escape = 0
+    print(f"You sprung a {sprung_trap}!")
+    print("What do you do?")
+    print("Use wits to escape [1]\nBlunt force your way out [2]\nPanic [3]")
+    choice = input("> ")
+    # think way out of the trap. 2\3 chance of success in escaping the trap
+    if choice == '1':
+        effect_wit = die_roll_fight()
+        print(f"You decide to try and think your way out of the {sprung_trap}.")
+        print("You roll the die...")
+        input("> ")
+        print(effect_wit)
+        if effect_wit <= 4:
+            print("success")
+            escape = 1
+        else:
+            print("fail")
+    # try to use strength to escape. 1\3 chance success
+    elif choice == '2':
+        effect_strength = die_roll_fight()
+        print(f"You decide to use your raw strength to escape from the {sprung_trap}.")
+        print("You roll the die...")
+        input("> ")
+        print(effect_strength)
+        if effect_strength <= 2:
+            print("success")
+            escape = 1
+        else:
+            print("fail")
+    # panic = automatic loss
+    else:
+        print("You lose your mind and fail to escape the trap. RIP")
+    return escape
 
 
 def welcome():
@@ -160,6 +219,8 @@ Eventually you come across a clearing.""")
             print("Trap activates")
         else:
             # monster, add monster(list)
+            # receives feedback on player winning or losing
+            # if win continue down path if loss end game
             print("While you were walking you hear the bushes rustle.")
             win = monster_select(forest_monsters)
             if win == 1:
@@ -167,14 +228,32 @@ Eventually you come across a clearing.""")
             else:
                 print("L")
 
-
-
-
     elif swamp_choice1 == "2":
         # higher trap chance
         print("Went Left")
         spawn_left1 = chance_roll()
         print(spawn_left1)
+        if spawn_left1 <= 3:
+            # free
+            print()
+            print("""*interesting thing* 
+Nothing else of note happens as you travel down the path. 
+Eventually you come across a clearing.""")
+        elif spawn_left1 <= 7:
+            # trap
+            # receives feedback on player winning or losing
+            # if win continue down path if loss end game
+            print("Trap activates")
+        else:
+            # monster, add monster(list)
+            # receives feedback on player winning or losing
+            # if win continue down path if loss end game
+            print("While you were walking you hear the bushes rustle.")
+            win = monster_select(forest_monsters)
+            if win == 1:
+                print("W")
+            else:
+                print("L")
     else:
         # left the path and get lost. options from here- end game or possibly find next path split
         print("Um... this is not the path... turn back... great now your lost")
@@ -188,10 +267,48 @@ You could have taken either and still gotten here!""")
     print("Which path do you think you should take?\nRight [1]\nLeft [2]")
     swamp_choice2 = input("> ")
     swamp_choice2 = swamp_choice2.strip()
+    # right path swampy higher monster chance
     if swamp_choice2 == "1":
-        print("Right")
+        spawn_right2 = chance_roll()
+        if spawn_right2 <= 3:
+            # free
+            print()
+            print("""things""")
+        elif spawn_right2 <= 6:
+            # trap
+            # receives feedback on player winning or losing
+            # if win continue down path if loss end game
+            print("Trap activates")
+        else:
+            # monster, add monster(list)
+            print("what happens before monster.")
+            win = monster_select(swamp_monsters)
+            # recieves feedbacl on player winning or losing
+            # if win continue down path if loss end game
+            if win == 1:
+                print("W")
+            else:
+                print("L")
+    # stable but higher traps
     elif swamp_choice2 == "2":
-        print("Left")
+        spawn_left2 = chance_roll()
+        if spawn_left2 <= 3:
+            # free
+            print()
+            print("""things show up? 
+Nothing else of note happens as you travel down the path. 
+Eventually you come across a clearing.""")
+        elif spawn_left1 <= 7:
+            # trap
+            print("Trap activates")
+        else:
+            # monster, add monster(list)
+            print("monster indicator noises")
+            win = monster_select(swamp_monsters)
+            if win == 1:
+                print("W")
+            else:
+                print("L")
     else:
         print("""You decide that instead of taking either path to walk around the clearing.
 As you are walking you find a hidden path. This one looks well made, and is brightly lit.
