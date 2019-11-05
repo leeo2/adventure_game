@@ -5,9 +5,10 @@
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
-mansion_monsters = ["ghost"]
+mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
+mansion_traps = ["trap door", "trap"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
-
+score = 0
 
 
 def die_roll_boss():
@@ -340,6 +341,18 @@ You decide to take this path over the other two.
     print("You start carefully start making your way down the path.")
     print("Suddenly a bright light appears in your way."
           "\nThe light fades to reveal...")
+
+def mansion_path():
+    print("You are heading towards a clearing in the middle of the forest")
+    print("What's that? Is that a mansion?")
+    print("You need to choose. \nWould you like to enter the mansion? [1] \n Or would you like to walk around the mansion? [2]")
+    mansion_choice1 = int(input(">"))
+    if mansion_choice1 == 1:
+        print("You chose to enter the mansion")
+        print("You creep up the rickety porch steps")
+        print("You gingerly knock on the door, the door creaks open from the force of your knock.")
+        print("")
+
 
 def end():
     print("The game is now over")
