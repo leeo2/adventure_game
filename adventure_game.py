@@ -11,10 +11,6 @@ mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
 mansion_traps = ["trap door", "trap"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 score = 0
-forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]
-swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
-mansion_monsters = ["ghost"]
-forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "quicksand"]
 
 # monster win :
 # 2 pt - fight
