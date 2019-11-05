@@ -589,6 +589,9 @@ def mansion_path(name, score):
                 print("You continue deeper into the house...")
             else:
                 end(score)
+    else:
+        print("Wrong choice, this will lead to your demise.")
+        end(score)
     mansion_boss()
 
 
