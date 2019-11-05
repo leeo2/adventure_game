@@ -8,7 +8,7 @@ import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
 mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
-mansion_traps = ["trap door", "trap"]
+mansion_traps = ["trap door", "trap", "hanging net", "Another trap", "pit of snakes"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 score = 0
 
