@@ -195,11 +195,19 @@ def trap_escape(sprung_trap):
 
 def welcome():
     print("""Welcome to out Adventure Game! You will be given a series of choices which 
-    will ultimately all contribute to your fate. To begin, please enter your name: """)
-    name = input()
+will ultimately all contribute to your fate. To begin, please enter your name: """)
+    name = input("> ")
     print(f"Welcome {name}!")
 
     print("The game will now begin.")
+    print("From where you begin, you need to choose if you would like to take the path on the right [1] or left [2]")
+    choice = int(input("> "))
+    if choice == 1:
+        swamp_path(score, name)
+    elif choice ==2:
+        mansion_path(name, score)
+    else:
+        print("Invalid choice. I will now send you on the path to the right.")
 
 
 def swamp_path(score, name):
@@ -351,7 +359,7 @@ And as such you don't notice the pressure plate.""")
             else:
                 end(score)
     else:
-        print("""You decide that instead of taking either path to walk around the clearing.
+        print("""You decide that instead of taking either path you walk around the clearing.
 As you are walking you find a hidden path. This one looks well made, and is brightly lit.
 You decide to take this path over the other two.
 """)
@@ -474,7 +482,7 @@ As you part ways you promise to come visit sometimes.
         end()
 
 
-def mansion_path():
+def mansion_path(name, score):
     print("You are heading towards a clearing in the middle of the forest")
     print("What's that? Is that a mansion?")
     print("You need to choose. \nWould you like to enter the mansion? [1] \n Or would you like to walk around the mansion? [2]")
@@ -483,15 +491,89 @@ def mansion_path():
         print("You chose to enter the mansion")
         print("You creep up the rickety porch steps")
         print("You gingerly knock on the door, the door creaks open from the force of your knock.")
-        print("")
+        monster1 = chance_roll()
+
+        if monster1 <= 3:
+            print("There is nothing on the other side of the door. You enter to explore.")
+        elif monster1 <= 6:
+            success = traps(mansion_traps)
+            if success == 0:
+                end(score)
+        else:
+            print("You continue even further into the house.")
+    elif mansion_choice1 == 2:
+        monster2 = chance_roll()
+        if monster2 <= 3:
+            print("You see a shadow and wonder what it is...")
+            print("Phew, It's just a brooms shadow")
+        elif monster2 <= 7:
+            print("What was that?")
+            success = traps(mansion_traps)
+            if success == 0:
+                end(score)
+            else:
+                print("You continue down the hallway while looking out for more traps.")
+        else:
+            print("While you were walking a shadow jumps you!")
+            win = monster_select(mansion_monsters)
+            if win == 1:
+                print("You continue deeper into the house...")
+            else:
+                end(score)
+    else:
+        print("I don't think that was an option...")
+        print("You need to choose. \nWould you like to enter the mansion? [1] \n Or would you like to walk around the mansion? [2]")
+        mansion_choice1 = int(input(">"))
+
+        if mansion_choice1 == 1:
+            print("You chose to enter the mansion")
+            print("You creep up the rickety porch steps")
+            print("You gingerly knock on the door, the door creaks open from the force of your knock.")
+            monster1 = chance_roll()
+
+            if monster1 <= 3:
+                print("There is nothing on the other side of the door. You enter to explore.")
+            elif monster1 <= 6:
+                success = traps(mansion_traps)
+                if success == 0:
+                    end(score)
+            else:
+                print("You continue even further into the house.")
+        elif mansion_choice1 == 2:
+            monster2 = chance_roll()
+            if monster2 <= 3:
+                print("You see a shadow and wonder what it is...")
+                print("Phew, It's just a brooms shadow")
+            elif monster2 <= 7:
+                print("What was that?")
+                success = traps(mansion_traps)
+                if success == 0:
+                    end(score)
+                else:
+                    print("You continue down the hallway while looking out for more traps.")
+            else:
+                print("While you were walking a shadow jumps you!")
+                win = monster_select(mansion_monsters)
+                if win == 1:
+                    print("You continue deeper into the house...")
+                else:
+                    end(score)
+    print("Would you like to turn right [1] or left [2]")
+    mansion_choice2 = int(input("> "))
+    if mansion_choice2 <= 1:
+        monster3 = chance_roll()
+
+
+
 
 
 def end():
     print("The game is now over")
     print(f"Your score is {score}")
 
-
+welcome()
 # these are for my use of testing my path function
 score = 0
+win = 0
 name = "name"
 run = swamp_path(score, name) # function caller to test swamp path
