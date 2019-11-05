@@ -1,10 +1,10 @@
 # Adventure Game
 # Creators: Elizabeth Fuller, Olivia Lee
 # Date Started: 10/30/19
-
+#if score doesn't work just trash it and make it so not dying means you win.
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
-swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "monster"]
+swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
 mansion_monsters = ["ghost"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 
@@ -190,6 +190,7 @@ def trap_escape(sprung_trap):
     # panic = automatic loss
     else:
         print("You lose your mind and fail to escape the trap. RIP")
+        end()
     return escape
 
 
