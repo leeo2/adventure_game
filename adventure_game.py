@@ -118,21 +118,21 @@ def monster_fight(creature):
         input("You roll for a chance to dodge\n>")
         print(dodge)
         if dodge <= 3:
-            print("dodges")
+            print("You managed to dodge the incoming attack.")
         elif attack1 == 1:
             health = health - 10
-            print("attack of 10")
+            print(f"{creature} attacks you and deals 10 damage.")
         elif attack1 <= 3:
-            print("attack of 20")
+            print(f"{creature} attacks you and deals 20 damage.")
             health = health - 20
         elif attack1 <= 6:
-            print("attack of 30")
+            print(f"{creature} attacks you and deals 30 damage.")
             health = health - 30
         elif attack1 <= 9:
-            print("attack of 40")
+            print(f"{creature} attacks you and deals 40 damage.")
             health = health - 40
         else:
-            print("attack of 50")
+            print(f"{creature} attacks you and deals 50 damage.")
             health = health - 50
         if health < 0:
             health = 0
@@ -418,21 +418,21 @@ def swamp_boss(score, name):
             input("You roll for a chance to dodge\n>")
             print(dodge)
             if dodge <= 3:
-                print("dodges")
+                print("You manage to dodge the incoming attack.")
             elif attack1 == 1:
                 health = health - 10
-                print("attack of 10")
+                print("The lamia attacks you and deals 10 damage.")
             elif attack1 <= 3:
-                print("attack of 20")
+                print("The lamia attacks you and deals 20 damage.")
                 health = health - 20
             elif attack1 <= 6:
-                print("attack of 30")
+                print("The lamia attacks you and deals 30 damage.")
                 health = health - 30
             elif attack1 <= 9:
-                print("attack of 40")
+                print("The lamia attacks you and deals 40 damage.")
                 health = health - 40
             else:
-                print("attack of 50")
+                print("The lamia attacks you and deals 50 damage.")
                 health = health - 50
             if health < 0:
                 health = 0
