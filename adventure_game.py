@@ -219,7 +219,7 @@ def swamp_path(score, name):
         print("\nYou took the path on the right.\nYou carefully watch your step as to not get tangled in the undergrowth.")
         # determine if monster appears, trap activates, or if player misses any impeding obstacles
         spawn_right1 = chance_roll()
-        print(spawn_right1) # statement to check random int
+
         if spawn_right1 <= 3:
             # free
             print()
@@ -251,7 +251,7 @@ Eventually you come across a clearing.""")
         # higher trap chance
         print("Went Left")
         spawn_left1 = chance_roll()
-        print(spawn_left1)
+
         if spawn_left1 <= 3:
             # free
             print()
@@ -300,48 +300,56 @@ You could have taken either and still gotten here!""")
         if spawn_right2 <= 3:
             # free
             print()
-            print("""things""")
+            print("""You head down the path and try to be careful not wanting to step in any sink holes.
+Yuck! One miss step is all it takes to get mud in your shoe.
+After trying to get rid of most of the mud, 
+you suck it up though and keep going.""")
         elif spawn_right2 <= 6:
             # trap
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
-            print("Trap activates")
+            print("With all of the wet and mushy ground you fail to spot a tripwire.")
             success = traps(forest_traps)
             if success == 0:
-                print("end game")
+                end(score)
+            else:
+                print("Keeping a closer eye out you make your way to the dryer ground at the end of the path.")
+
         else:
             # monster, add monster(list)
-            print("what happens before monster.")
+            print("Keeee! A blur crosses your vision.")
             win = monster_select(swamp_monsters)
             # recieves feedbacl on player winning or losing
             # if win continue down path if loss end game
             if win == 1:
-                print("W")
+                print("Keeping an eye out for anymore swamp monster you continue onward.")
             else:
-                print("L")
+                end(score)
     # stable but higher traps
     elif swamp_choice2 == "2":
         spawn_left2 = chance_roll()
         if spawn_left2 <= 3:
             # free
             print()
-            print("""things show up? 
-Nothing else of note happens as you travel down the path. 
-Eventually you come across a clearing.""")
+            print("""As you thought this path was stable you don't watch very carefully.
+You get tripped up on a tree root.""")
         elif spawn_left1 <= 7:
             # trap
-            print("Trap activates")
+            print("""As you thought this path was stable you don't watch very carefully.
+And as such you don't notice the pressure plate.""")
             success = traps(forest_traps)
             if success == 0:
                 print("end game")
+            else:
+                print("With much more care you keep walking down the path.")
         else:
             # monster, add monster(list)
-            print("monster indicator noises")
+            print("The water beside the path begins to bubble and erupts in a great splash.")
             win = monster_select(swamp_monsters)
             if win == 1:
-                print("W")
+                print("You shakily continue down the path.")
             else:
-                print("L")
+                end(score)
     else:
         print("""You decide that instead of taking either path to walk around the clearing.
 As you are walking you find a hidden path. This one looks well made, and is brightly lit.
