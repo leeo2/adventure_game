@@ -194,7 +194,7 @@ def trap_escape(sprung_trap):
 
 
 def welcome():
-    print("""Welcome to out Adventure Game! You will be given a series of choices which 
+    print("""Welcome to our Adventure Game! You will be given a series of choices which 
 will ultimately all contribute to your fate. To begin, please enter your name: """)
     name = input("> ")
     print(f"Welcome {name}!")
