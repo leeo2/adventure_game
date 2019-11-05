@@ -1,12 +1,14 @@
 # Adventure Game
 # Creators: Elizabeth Fuller, Olivia Lee
 # Date Started: 10/30/19
+
+
 #if score doesn't work just trash it and make it so not dying means you win.
 import random
-forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
+forest_monsters = ["werewolf", "goblin", "ogre", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
 mansion_monsters = ["ghost"]
-forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
+forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "quicksand"]
 
 # monster win :
 # 2 pt - fight
@@ -14,11 +16,6 @@ forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 #  traps success
 # 2 - wit
 # 1 - strength
-
-def die_roll_boss():
-    # roll one 20 sided die, for boss fights
-    die = random.randint(1, 20)
-    return die
 
 
 def die_roll_fight():
