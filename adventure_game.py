@@ -2,6 +2,8 @@
 # Creators: Elizabeth Fuller, Olivia Lee
 # Date Started: 10/30/19
 
+
+#if score doesn't work just trash it and make it so not dying means you win.
 import random
 forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
 swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
@@ -9,12 +11,17 @@ mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
 mansion_traps = ["trap door", "trap"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
 score = 0
+forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]
+swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
+mansion_monsters = ["ghost"]
+forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "quicksand"]
 
-
-def die_roll_boss():
-    # roll one 20 sided die, for boss fights
-    die = random.randint(1, 20)
-    return die
+# monster win :
+# 2 pt - fight
+#  1pt - flee + reason
+#  traps success
+# 2 - wit
+# 1 - strength
 
 
 def die_roll_fight():
@@ -52,6 +59,7 @@ def monster_encounter(creature):
         win = monster_fight(creature)
     # player choose flee
     elif choice == '2':
+# 50\50 1pt success, 0 pt + lose fail
         print("choose flee")
     # player picked panic automatic loss
     elif choice == '3':
@@ -77,13 +85,12 @@ def monster_fight(creature):
     player 'rolls' to determine damage dealt.
     monster attacks, player rolls to dodge. monster attack strength by random int
     loops till player or monster is dead"""
-    monster_health = 150
+    monster_health = 125
     health = 100
-    roll1 = die_roll_fight()
     print(f"You choose to stand your ground and fight.")
     print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
     while monster_health != 0 or health != 0:
-
+        roll1 = die_roll_fight()
         print(f"\nYour move:\nYou roll the dice""")
         input(">")
         print(roll1)
@@ -100,12 +107,12 @@ def monster_fight(creature):
             damage = roll1 * 10 + 10
             print(f"You did {damage} damage to the {creature}.")
             monster_health = monster_health - damage
-
+        if monster_health < 0:
+            monster_health = 0
         print(f"\nPlayer health: {health}\n{creature.title()} health: {monster_health}")
         # print health statuses. check to see if monster is dead. if yes stop loop
-        if monster_health == 0:
+        if monster_health <= 0:
             print(f"You win!\nYou beat the {creature}! ")
-
             return 1
         # monster attack. player rolls to dodge. attack picked by random int
         print(f"{creature.title()}'s turn")
@@ -114,25 +121,27 @@ def monster_fight(creature):
         input("You roll for a chance to dodge\n>")
         print(dodge)
         if dodge <= 3:
-            print("dodges")
+            print("You managed to dodge the incoming attack.")
         elif attack1 == 1:
             health = health - 10
-            print("attack of 10")
+            print(f"{creature} attacks you and deals 10 damage.")
         elif attack1 <= 3:
-            print("attack of 20")
+            print(f"{creature} attacks you and deals 20 damage.")
             health = health - 20
         elif attack1 <= 6:
-            print("attack of 30")
+            print(f"{creature} attacks you and deals 30 damage.")
             health = health - 30
         elif attack1 <= 9:
-            print("attack of 40")
+            print(f"{creature} attacks you and deals 40 damage.")
             health = health - 40
         else:
-            print("attack of 50")
+            print(f"{creature} attacks you and deals 50 damage.")
             health = health - 50
+        if health < 0:
+            health = 0
         # print health update. check to see if player is alive, no? - stop loop
         print(f"Player health: {health}\n{creature.title()} health: {monster_health}")
-        if health == 0:
+        if health < 0:
             print("You lose")
             return 0
     # loop till one is dead
@@ -165,10 +174,10 @@ def trap_escape(sprung_trap):
         input("> ")
         print(effect_wit)
         if effect_wit <= 4:
-            print("success")
+            print(f"You successfully escaped the {sprung_trap}!")
             escape = 1
         else:
-            print("fail")
+            print(f"You failed to escape the {sprung_trap}.")
     # try to use strength to escape. 1\3 chance success
     elif choice == '2':
         effect_strength = die_roll_fight()
@@ -177,13 +186,14 @@ def trap_escape(sprung_trap):
         input("> ")
         print(effect_strength)
         if effect_strength <= 2:
-            print("success")
+            print(f"You successfully escaped the {sprung_trap}!")
             escape = 1
         else:
-            print("fail")
+            print(f"You failed to escape the {sprung_trap}.")
     # panic = automatic loss
     else:
         print("You lose your mind and fail to escape the trap. RIP")
+        end()
     return escape
 
 
@@ -196,8 +206,7 @@ def welcome():
     print("The game will now begin.")
 
 
-
-def swamp_path():
+def swamp_path(score, name):
     # Path to go to the swamp. walking down chosen path, first swamp path fork dialog
     print("You walk down the path taking in the scenery.\nYou come across another fork in the road.")
     print("The path splits left and right.\nThe right path is overgrown and looks very untrodden.")
@@ -213,7 +222,7 @@ def swamp_path():
         print("\nYou took the path on the right.\nYou carefully watch your step as to not get tangled in the undergrowth.")
         # determine if monster appears, trap activates, or if player misses any impeding obstacles
         spawn_right1 = chance_roll()
-        print(spawn_right1) # statement to check random int
+
         if spawn_right1 <= 3:
             # free
             print()
@@ -222,11 +231,13 @@ Nothing else of note happens as you travel down the path.
 Eventually you come across a clearing.""")
         elif spawn_right1 <= 6:
             # trap
-            print("As you were preoccupied by a particularly tricky bit of folliage...")
+            print("As you were preoccupied by a particularly tricky bit of foliage...")
             print("You get caught by a trap!")
             success = traps(forest_traps)
             if success == 0:
-                print("end game")
+                end(score)
+            else:
+                print("You continue down the path and find a clearing.")
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
@@ -234,42 +245,49 @@ Eventually you come across a clearing.""")
             print("While you were walking you hear the bushes rustle.")
             win = monster_select(forest_monsters)
             if win == 1:
-                print("W")
+                print("After beating the creature you continue down the path.")
+                print("The path starts clearing and ends in a great clearing.")
             else:
-                print("L")
+                end(score)
 
     elif swamp_choice1 == "2":
         # higher trap chance
         print("Went Left")
         spawn_left1 = chance_roll()
-        print(spawn_left1)
+
         if spawn_left1 <= 3:
             # free
             print()
-            print("""*interesting thing* 
+            print("""You get scared when you see something out the corner of your eye... it was a shadow!
+You are now embarrassed that you goth scared by a shadow.
 Nothing else of note happens as you travel down the path. 
 Eventually you come across a clearing.""")
         elif spawn_left1 <= 7:
             # trap
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
-            print("Trap activates")
+            print("You got tripped by something in the dark")
+            print("There is a grinding noise...")
             success = traps(forest_traps)
             if success == 0:
-                print("end game")
+                end(score)
+            else:
+                print("You continue down the path while looking out for more traps.")
+                print("No more traps activate and the path lightens as it comes upon a clearing.")
         else:
             # monster, add monster(list)
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
-            print("While you were walking you hear the bushes rustle.")
+            print("While you were walking a shadow jumps you!")
             win = monster_select(forest_monsters)
             if win == 1:
-                print("W")
+                print("You continue cautiously down the path until you reach a clearing.")
             else:
-                print("L")
+                end(score)
     else:
         # left the path and get lost. options from here- end game or possibly find next path split
         print("Um... this is not the path... turn back... great now your lost")
+        end()
     # paths converge and then there is another fork with 2 paths
     print("You decide to take a quick break and look around the clearing.")
     print("""As you do you realize the other path probably ends here as well. 
@@ -286,48 +304,56 @@ You could have taken either and still gotten here!""")
         if spawn_right2 <= 3:
             # free
             print()
-            print("""things""")
+            print("""You head down the path and try to be careful not wanting to step in any sink holes.
+Yuck! One miss step is all it takes to get mud in your shoe.
+After trying to get rid of most of the mud, 
+you suck it up though and keep going.""")
         elif spawn_right2 <= 6:
             # trap
             # receives feedback on player winning or losing
             # if win continue down path if loss end game
-            print("Trap activates")
+            print("With all of the wet and mushy ground you fail to spot a tripwire.")
             success = traps(forest_traps)
             if success == 0:
-                print("end game")
+                end(score)
+            else:
+                print("Keeping a closer eye out you make your way to the dryer ground at the end of the path.")
+
         else:
             # monster, add monster(list)
-            print("what happens before monster.")
+            print("Keeee! A blur crosses your vision.")
             win = monster_select(swamp_monsters)
             # recieves feedbacl on player winning or losing
             # if win continue down path if loss end game
             if win == 1:
-                print("W")
+                print("Keeping an eye out for anymore swamp monster you continue onward.")
             else:
-                print("L")
+                end(score)
     # stable but higher traps
     elif swamp_choice2 == "2":
         spawn_left2 = chance_roll()
         if spawn_left2 <= 3:
             # free
             print()
-            print("""things show up? 
-Nothing else of note happens as you travel down the path. 
-Eventually you come across a clearing.""")
+            print("""As you thought this path was stable you don't watch very carefully.
+You get tripped up on a tree root.""")
         elif spawn_left1 <= 7:
             # trap
-            print("Trap activates")
+            print("""As you thought this path was stable you don't watch very carefully.
+And as such you don't notice the pressure plate.""")
             success = traps(forest_traps)
             if success == 0:
                 print("end game")
+            else:
+                print("With much more care you keep walking down the path.")
         else:
             # monster, add monster(list)
-            print("monster indicator noises")
+            print("The water beside the path begins to bubble and erupts in a great splash.")
             win = monster_select(swamp_monsters)
             if win == 1:
-                print("W")
+                print("You shakily continue down the path.")
             else:
-                print("L")
+                end(score)
     else:
         print("""You decide that instead of taking either path to walk around the clearing.
 As you are walking you find a hidden path. This one looks well made, and is brightly lit.
@@ -341,6 +367,116 @@ You decide to take this path over the other two.
     print("You start carefully start making your way down the path.")
     print("Suddenly a bright light appears in your way."
           "\nThe light fades to reveal...")
+    swamp_boss(score, name)
+
+
+def swamp_boss(score, name):
+    boss_health = 175
+    health = 100
+    print("A lamia blocking your only escape."
+          "\nShe beckons you closer..."
+          "\nWhat do you do?"
+          "\nCharge in for the attack [1]"
+          "\nBecome seduced by the lamia [2]"
+          "\nTry to talk to her [3]")
+    choice = input("> ")
+    if choice == '1':
+        print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+        while boss_health != 0 or health != 0:
+            roll1 = die_roll_fight()
+            print(f"\nYour move:\nYou roll the dice""")
+            input(">")
+            print(roll1)
+            if roll1 <= 3:
+                damage = round(roll1 / 2 * 10)
+                crit = random.randint(0, 3)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            elif roll1 <= 5:
+                damage = round((roll1 / 2 + roll1) * 10)
+                crit = random.randint(0, 2)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            else:
+                damage = roll1 * 10 + 10
+                crit = random.randint(0, 1)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the lamia.")
+                boss_health = boss_health - damage
+            if boss_health < 0:
+                boss_health = 0
+            print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+            if boss_health <= 0:
+                print(f"You win!\nYou beat the lamia! ")
+                score = score + 3
+                print(" + 3")
+                return
+            print(f"Lamia's turn")
+            attack1 = chance_roll()
+            dodge = die_roll_fight()
+            input("You roll for a chance to dodge\n>")
+            print(dodge)
+            if dodge <= 3:
+                print("You manage to dodge the incoming attack.")
+            elif attack1 == 1:
+                health = health - 10
+                print("The lamia attacks you and deals 10 damage.")
+            elif attack1 <= 3:
+                print("The lamia attacks you and deals 20 damage.")
+                health = health - 20
+            elif attack1 <= 6:
+                print("The lamia attacks you and deals 30 damage.")
+                health = health - 30
+            elif attack1 <= 9:
+                print("The lamia attacks you and deals 40 damage.")
+                health = health - 40
+            else:
+                print("The lamia attacks you and deals 50 damage.")
+                health = health - 50
+            if health < 0:
+                health = 0
+            print(f"Lamia Health: {boss_health}\nPlayer Health: {health}")
+            if health <= 0:
+                print("You lose")
+                return
+    elif choice == '2':
+        print("She succeed in seducing you."
+              "\nShe wrapped you up in her tail and carried you to her lair."
+              "\nIt is a nice looking lair for a snake woman."
+              "\nIt may be a cave, but it's decorated nicely with the bones of her past prey.")
+        print("You became dinner"
+              "\n\nYou lose!")
+        end()
+    else:
+        # become friends
+        print(f'''You decide to try talking to the lamia.
+She seems startled by this, confusion settles over her face.
+“You are talking to me? No one talks to me!”
+She then explains that everyone that she came across tried to kill her
+So as a defensive action she decided to hypnotize them and toss them into the snake pit.
+“Oh my! I haven\'t even introduced myself. I am Vasugi.”
+\nYou introduce yourself
+“I am {name}, nice to meet you Vasugi.” 
+
+Vasugi offers to take you back to her den for the night.
+As it was getting quite late you took her up on the offer.
+
+Vasugi's den was very cozy and looked well maintained.
+You spend the night in a soft pile of furs.
+
+After a small breakfast and chat with Vasugi, she escorts you back to civilization. 
+As you part ways you promise to come visit sometimes.
+''')
+        print("You be came friends with Vasugi the Lamia!")
+        score = score + 4
+        print(" + 4")
+        end()
+
 
 def mansion_path():
     print("You are heading towards a clearing in the middle of the forest")
@@ -359,4 +495,7 @@ def end():
     print(f"Your score is {score}")
 
 
-run = swamp_path() # function caller to test swamp path
+# these are for my use of testing my path function
+score = 0
+name = "name"
+run = swamp_path(score, name) # function caller to test swamp path
