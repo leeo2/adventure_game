@@ -560,10 +560,119 @@ def mansion_path(name, score):
                     end(score)
     print("Would you like to turn right [1] or left [2]")
     mansion_choice2 = int(input("> "))
-    if mansion_choice2 <= 1:
+    if mansion_choice2 == 1:
         monster3 = chance_roll()
+        if monster3 <= 3:
+            print("The hallway is empty, you are in the clear.")
+        elif monster2 <= 6:
+            success = traps(mansion_traps)
+            if success == 0:
+                end(score)
+        else:
+            print("You continue even further into the house.")
+    elif mansion_choice2 == 2:
+        monster4 = chance_roll()
+        if monster4 <= 3:
+            print("You see a shadow and wonder what it is...")
+            print("Phew, It's just a shadow")
+        elif monster4 <= 7:
+            print("What was that?")
+            success = traps(mansion_traps)
+            if success == 0:
+                end(score)
+            else:
+                print("You continue down the hallway while looking out for more traps.")
+        else:
+            print("While you were walking a shadow jumps you!")
+            win = monster_select(mansion_monsters)
+            if win == 1:
+                print("You continue deeper into the house...")
+            else:
+                end(score)
+    mansion_boss()
 
 
+def mansion_boss(score, name):
+    boss_health = 175
+    health = 100
+    print("""Oh no! There is a huge monster ahead? What do you want to do?
+        \nCharge in for the attack [1]"
+        \nBecome seduced by the monster [2]"
+        \nTry to talk to it [3]""")
+    choice = input("> ")
+    if choice == '1':
+        print(f"Monster Health: {boss_health}\nPlayer Health: {health}")
+        while boss_health != 0 or health != 0:
+            roll1 = die_roll_fight()
+            print(f"\nYour move:\nYou roll the dice""")
+            input(">")
+            print(roll1)
+            if roll1 <= 3:
+                damage = round(roll1 / 2 * 10)
+                crit = random.randint(0, 3)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the monster.")
+                boss_health = boss_health - damage
+            elif roll1 <= 5:
+                damage = round((roll1 / 2 + roll1) * 10)
+                crit = random.randint(0, 2)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the monster.")
+                boss_health = boss_health - damage
+            else:
+                damage = roll1 * 10 + 10
+                crit = random.randint(0, 1)
+                if crit == 1:
+                    damage = damage + 10
+                print(f"You did {damage} damage to the monster.")
+                boss_health = boss_health - damage
+            if boss_health < 0:
+                boss_health = 0
+            print(f"Monster Health: {boss_health}\nPlayer Health: {health}")
+            if boss_health <= 0:
+                print(f"You win!\nYou beat the Monster! ")
+                score = score + 3
+                print(" + 3")
+                return
+            print(f"Monster's turn")
+            attack1 = chance_roll()
+            dodge = die_roll_fight()
+            input("You roll for a chance to dodge\n>")
+            print(dodge)
+            if dodge <= 3:
+                print("You manage to dodge the incoming attack.")
+            elif attack1 == 1:
+                health = health - 10
+                print("The monster attacks you and deals 10 damage.")
+            elif attack1 <= 3:
+                print("The monster attacks you and deals 20 damage.")
+                health = health - 20
+            elif attack1 <= 6:
+                print("The monster attacks you and deals 30 damage.")
+                health = health - 30
+            elif attack1 <= 9:
+                print("The monster attacks you and deals 40 damage.")
+                health = health - 40
+            else:
+                print("The monster attacks you and deals 50 damage.")
+                health = health - 50
+            if health < 0:
+                health = 0
+            print(f"Monster Health: {boss_health}\nPlayer Health: {health}")
+            if health <= 0:
+                print("You lose")
+                return
+    elif choice == '2':
+        print("Oh no, she looks pretty hungry... She has decided to eat you for her next meal"
+              "\n\nYou lose!")
+        end()
+    else:
+        print("You become friends!")
+        score = score + 4
+        print(" + 4")
+        end()
 
 
 
