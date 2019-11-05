@@ -5,7 +5,7 @@
 
 #if score doesn't work just trash it and make it so not dying means you win.
 import random
-forest_monsters = ["werewolf", "goblin", "ogre", "Moster", "Creepything"]  # 3 placeholder monsters, change these
+forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]
 swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
 mansion_monsters = ["ghost"]
 forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "quicksand"]
@@ -200,7 +200,6 @@ def welcome():
     print("The game will now begin.")
 
 
-
 def swamp_path(score, name):
     # Path to go to the swamp. walking down chosen path, first swamp path fork dialog
     print("You walk down the path taking in the scenery.\nYou come across another fork in the road.")
@@ -282,6 +281,7 @@ Eventually you come across a clearing.""")
     else:
         # left the path and get lost. options from here- end game or possibly find next path split
         print("Um... this is not the path... turn back... great now your lost")
+        end()
     # paths converge and then there is another fork with 2 paths
     print("You decide to take a quick break and look around the clearing.")
     print("""As you do you realize the other path probably ends here as well. 
