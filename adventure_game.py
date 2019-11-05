@@ -564,7 +564,7 @@ def mansion_path(name, score):
         monster3 = chance_roll()
         if monster3 <= 3:
             print("The hallway is empty, you are in the clear.")
-        elif monster2 <= 6:
+        elif monster3 <= 6:
             success = traps(mansion_traps)
             if success == 0:
                 end(score)
