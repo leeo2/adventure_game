@@ -5,11 +5,11 @@
 
 #if score doesn't work just trash it and make it so not dying means you win.
 import random
-forest_monsters = ["werewolf", "goblin", "monster", "Moster", "Creepything"]  # 3 placeholder monsters, change these
-swamp_monsters = ["slime", "kappa", "giant frog", "monster", "monster"]
+forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]  # 3 placeholder monsters, change these
+swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
 mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
 mansion_traps = ["trap door", "trap", "hanging net", "Another trap", "pit of snakes"]
-forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "gentrap"]
+forest_traps = ["pit fall", "hanging net", "snare", "snake pit", "quicksand"]
 score = 0
 
 # monster win :
