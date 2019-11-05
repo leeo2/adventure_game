@@ -5,7 +5,7 @@
 
 #if score doesn't work just trash it and make it so not dying means you win.
 import random
-forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]  # 3 placeholder monsters, change these
+forest_monsters = ["werewolf", "goblin", "ogre", "black phoenix", "creepything"]
 swamp_monsters = ["slime", "kappa", "giant frog", "man-eating snake", "swarm of locus"]
 mansion_monsters = ["ghost", "zombie", "mummy", "spider nest", "snake"]
 mansion_traps = ["trap door", "trap", "hanging net", "Another trap", "pit of snakes"]
@@ -678,14 +678,13 @@ def mansion_boss(score, name):
         end()
 
 
-
 def end():
     print("The game is now over")
     print(f"Your score is {score}")
 
 welcome()
 # these are for my use of testing my path function
-score = 0
+#score = 0
 win = 0
 name = "name"
-run = swamp_path(score, name) # function caller to test swamp path
+#run = swamp_path(score, name) # function caller to test swamp path
